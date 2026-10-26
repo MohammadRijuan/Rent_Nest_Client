@@ -1,4 +1,9 @@
-const publicGroupLayout = (
+import Footer from "@/components/shared/footer";
+import Navbar from "@/components/shared/navbar";
+import { getMe } from "@/service/getMe";
+
+
+const publicGroupLayout = async(
     {
         children
     }
@@ -8,9 +13,13 @@ const publicGroupLayout = (
 
         }
 ) => {
+
+    const user = await getMe()
     return (
-        <div>
+        <div suppressHydrationWarning>
+            <Navbar user = {user}/>
             {children}
+            <Footer/>
 
         </div>
     );
