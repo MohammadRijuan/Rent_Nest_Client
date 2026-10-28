@@ -39,16 +39,6 @@ export const LoginAction = async (redirectTo: string, prevState: userState, form
 
     const result = await res.json();
 
-    // if (!res.ok) {
-    //     toast.error(result.message || "Login failed");
-    //     return;
-    // }
-    // else{
-    //     toast.success("Login successful!");
-
-    // }
-
-
 
 
 
