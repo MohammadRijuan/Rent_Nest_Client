@@ -1,4 +1,4 @@
-type IUser = {
+export type IUser = {
     success: boolean,
     message: string,
     data: {
@@ -24,5 +24,5 @@ type IUser = {
 
 
 export type NavbarProps = {
-    user: IUser
+    user: IUser | null
 }

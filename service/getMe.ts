@@ -1,39 +1,31 @@
 "use server"
 
 import { cookies } from "next/headers";
+import type { IUser } from "@/lib/types";
 
-export const getMe = async () => {
+export const getMe = async (): Promise<IUser | null> => {
     const cookieStore = await cookies();
-
     const accessToken = cookieStore.get("accessToken")?.value || null;
 
-    if(!accessToken){
-        // throw new Error("User Not Logged In!");
-
-        return {
-            success : false,
-            message : "User not logged in!"
-        }
+    if (!accessToken) {
+        return null;
     }
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/user/me`, {
         headers : {
-            // Authorization : accessToken as unknown as string,
-            // Authorization : `${accessToken}`,
-            // Authorization : `Bearer ${accessToken}`
-
             Cookie : `accessToken=${accessToken}`
         },
-
-        cache : "force-cache",
-        next : {
-            revalidate : 60 * 60 * 24, // 1day
-            tags : ["my-profile"]
-        }
+        cache : "no-store",
     });
 
-    const result = res.json();
+    if (res.status === 401 || res.status === 403) {
+        return null;
+    }
 
+    if (!res.ok) {
+        throw new Error(`Failed to load current user (HTTP ${res.status})`);
+    }
 
-    return result
-}
+    const result = (await res.json()) as IUser;
+    return result.success ? result : null;
+};

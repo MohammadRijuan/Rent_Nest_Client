@@ -1,18 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import {
   Menu,
   X,
   House,
-  Building2,
   UserRound,
   LayoutDashboard,
   LogOut,
   ChevronDown,
 } from "lucide-react";
 import { NavbarProps } from "@/lib/types";
+import { Logout } from "@/service/logout";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -21,31 +23,38 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-export default function Navbar({user} : NavbarProps) {
+export default function Navbar({ user }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
- 
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const isLoggedIn = Boolean(user?.success);
 
-  const profileRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
-  useEffect(() => {
-    function handleOutsideClick(event: MouseEvent) {
-      if (
-        profileRef.current &&
-        !profileRef.current.contains(event.target as Node)
-      ) {
-        setIsProfileOpen(false);
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+
+    setIsLoggingOut(true);
+    setIsProfileOpen(false);
+
+    try {
+      const result = await Logout();
+
+      if (result?.success) {
+        toast.success("Logged out successfully");
+        setIsLoggingOut(false);
+        router.replace("/login");
+        router.refresh();
+      } else {
+        toast.error("Logout failed. Please try again.");
+        setIsLoggingOut(false);
       }
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("Logout failed. Please try again.");
+      setIsLoggingOut(false);
     }
-
-    document.addEventListener("mousedown", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
-
-  
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur">
@@ -79,8 +88,8 @@ export default function Navbar({user} : NavbarProps) {
 
         {/* Desktop authentication / profile */}
         <div className="hidden items-center gap-3 lg:flex">
-          {user ? (
-            <div className="relative" ref={profileRef}>
+          {isLoggedIn ? (
+            <div className="relative">
               <button
                 type="button"
                 onClick={() => setIsProfileOpen((open) => !open)}
@@ -96,9 +105,8 @@ export default function Navbar({user} : NavbarProps) {
                 </span>
                 <ChevronDown
                   size={16}
-                  className={`text-zinc-500 transition ${
-                    isProfileOpen ? "rotate-180" : ""
-                  }`}
+                  className={`text-zinc-500 transition ${isProfileOpen ? "rotate-180" : ""
+                    }`}
                 />
               </button>
 
@@ -126,11 +134,12 @@ export default function Navbar({user} : NavbarProps) {
 
                   <button
                     type="button"
-                    // onClick={}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-600 transition hover:bg-red-50"
+                    onClick={handleLogout}
+                    disabled={isLoggingOut}
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-600 transition hover:bg-red-50 disabled:cursor-wait disabled:opacity-60"
                   >
                     <LogOut size={18} />
-                    Logout
+                    {isLoggingOut ? "Logging out..." : "Logout"}
                   </button>
                 </div>
               )}
@@ -153,7 +162,7 @@ export default function Navbar({user} : NavbarProps) {
             </>
           )}
 
-          
+
         </div>
 
         {/* Mobile menu toggle */}
@@ -185,7 +194,7 @@ export default function Navbar({user} : NavbarProps) {
 
             <div className="my-2 border-t border-zinc-200" />
 
-            {user ? (
+            {isLoggedIn ? (
               <>
                 <Link
                   href="/profile"
@@ -207,11 +216,12 @@ export default function Navbar({user} : NavbarProps) {
 
                 <button
                   type="button"
-                  // onClick={handleLogout}
-                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm text-red-600 hover:bg-red-50"
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm text-red-600 hover:bg-red-50 disabled:cursor-wait disabled:opacity-60"
                 >
                   <LogOut size={18} />
-                  Logout
+                  {isLoggingOut ? "Logging out..." : "Logout"}
                 </button>
               </>
             ) : (
