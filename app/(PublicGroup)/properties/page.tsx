@@ -21,8 +21,11 @@ export default async function PropertiesPage() {
     );
   }
 
+  // Get properties and exclude rented ones.
   const properties: Property[] = Array.isArray(result.data?.data?.data)
-    ? result.data.data.data
+    ? result.data.data.data.filter(
+        (property: Property) => property.status !== "RENTED"
+      )
     : [];
 
   return (

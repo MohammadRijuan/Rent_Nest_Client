@@ -10,7 +10,10 @@ const PropertyAction = async () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            cache: "force-cache"
+            next: {
+                revalidate: 60 * 60 * 6,
+                tags: ["properties"],
+            }
         })
 
         if (!res.ok) {
