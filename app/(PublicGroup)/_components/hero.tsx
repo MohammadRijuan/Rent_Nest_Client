@@ -1,88 +1,90 @@
-
-"use client";
-
 import Image from "next/image";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-
-const heroSlides = [
-  {
-    title: "Find Your Perfect Home",
-    description: "Discover rental properties that fit your lifestyle.",
-    image: "/images/rent-1.jpg",
-    alt: "Modern house surrounded by greenery",
-  },
-  {
-    title: "Comfort Meets Convenience",
-    description: "Explore beautiful homes in your preferred location.",
-    image: "/images/rent-1.jpg",
-    alt: "Bright and spacious modern living room",
-  },
-  {
-    title: "Your Next Chapter Starts Here",
-    description: "Find a place where you can feel at home.",
-    image: "/images/rent-1.jpg",
-    alt: "Contemporary home exterior",
-  },
-];
+import Link from "next/link";
+import { ArrowDownRight, ArrowRight, MapPin } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="w-full px-4 py-8 sm:px-6 lg:px-8">
-      <Carousel opts={{
-        loop: true,
-        align: "start",
-      }} className="mx-auto w-full max-w-7xl">
-        <CarouselContent>
-          {heroSlides.map((slide) => (
-            <CarouselItem key={slide.title}>
-              <div className="relative h-[320px] overflow-hidden rounded-2xl sm:h-[420px] lg:h-[540px]">
-                <Image
-                  src={slide.image}
-                  alt={slide.alt}
-                  fill
-                  priority={slide.title === heroSlides[0].title}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 90vw, 1280px"
-                  className="object-cover"
-                />
+    <section className="overflow-hidden bg-[#f3f0e7]">
+      <div className="mx-auto grid min-h-[620px] max-w-[1440px] items-center gap-12 px-5 py-12 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-14 lg:py-16">
+        <div className="relative z-10 max-w-2xl">
+          <div className="mb-8 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#45644d]">
+            <span className="h-px w-8 bg-[#a65f3f]" />
+            A more thoughtful way to rent
+          </div>
 
-                <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent"  />
+          <h1 className="text-[clamp(3.35rem,7vw,6.6rem)] font-medium leading-[0.94] tracking-[-0.065em] text-[#202b23]">
+            Find a place
+            <br />
+            to <span className="font-serif font-normal italic text-[#507258]">begin.</span>
+          </h1>
 
-                <div className="absolute inset-0 flex items-center">
-                  <div className="max-w-2xl space-y-4 px-6 text-white sm:px-12 lg:px-16">
-                    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-green-300">
-                      RentNest
-                    </p>
+          <p className="mt-7 max-w-lg text-base leading-7 text-[#626960] sm:text-lg sm:leading-8">
+            A good home changes the shape of your days. Find a rental that fits
+            your life, your plans, and the way you want to feel at home.
+          </p>
 
-                    <h1 className="text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-                      {slide.title}
-                    </h1>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/properties"
+              className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#2f5039] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#243f2d]"
+            >
+              Explore available homes
+              <ArrowRight
+                size={17}
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </Link>
+            <Link
+              href="/register"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-[#c8c9bc] px-6 py-3.5 text-sm font-semibold text-[#35463a] transition-colors hover:border-[#637966] hover:bg-white/50"
+            >
+              I have a property
+              <ArrowDownRight size={16} />
+            </Link>
+          </div>
 
-                    <p className="max-w-lg text-sm leading-6 text-white/85 sm:text-lg sm:leading-8">
-                      {slide.description}
-                    </p>
+          <div className="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[#d8d6ca] pt-5 text-sm text-[#626960]">
+            <span className="inline-flex items-center gap-2">
+              <MapPin size={15} className="text-[#a65f3f]" />
+              Made for renting in Bangladesh
+            </span>
+            <span className="hidden h-1 w-1 rounded-full bg-[#a65f3f] sm:block" />
+            <span>Clear listings. A simpler search.</span>
+          </div>
+        </div>
 
-                    <a
-                      href="/properties"
-                      className="inline-flex rounded-lg bg-green-600 px-6 py-3 font-semibold text-white transition hover:bg-green-700"
-                    >
-                      Explore Properties
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
+        <div className="relative mx-auto w-full max-w-[580px] lg:ml-auto">
+          <div className="absolute -left-7 top-12 z-10 hidden h-24 w-24 rounded-full border border-[#9d684e]/40 sm:block" />
+          <div className="relative aspect-[0.94] overflow-hidden rounded-t-[48%] rounded-b-2xl bg-[#d7dfd9] shadow-[0_28px_70px_-38px_rgba(37,53,41,0.42)]">
+            <Image
+              src="/images/rent-1.jpg"
+              alt="A house-shaped wooden model beside a magnifying glass and the word rent"
+              fill
+              loading="eager"
+              sizes="(max-width: 1024px) 90vw, 46vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1c2a21]/40 via-transparent to-transparent" />
+            <span className="absolute bottom-7 left-7 text-xs font-semibold uppercase tracking-[0.18em] text-white/90">
+              Find your next chapter
+            </span>
+          </div>
 
-        <CarouselPrevious className="left-3 border-0 bg-white/90 hover:bg-white sm:left-5" />
-        <CarouselNext className="right-3 border-0 bg-white/90 hover:bg-white sm:right-5" />
-      </Carousel>
+          <div className="absolute -bottom-5 -left-3 max-w-[230px] rounded-2xl border border-[#e1ded2] bg-[#fbfaf6] p-5 shadow-[0_16px_40px_-24px_rgba(32,43,35,0.4)] sm:-left-10 sm:bottom-9">
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#a65f3f]">
+              The search starts here
+            </p>
+            <p className="mt-2 font-serif text-xl leading-snug text-[#26342a]">
+              Your next place, on your terms.
+            </p>
+          </div>
+          <span className="absolute -right-2 top-8 hidden text-xs font-semibold uppercase tracking-[0.2em] text-[#6b756a] [writing-mode:vertical-rl] lg:block">
+            RENTNEST · FIND YOUR PLACE
+          </span>
+        </div>
+      </div>
     </section>
   );
 }
+
+export default Hero;

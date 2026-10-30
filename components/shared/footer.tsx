@@ -43,39 +43,38 @@ export default function Footer({
           : "/login";
 
   return (
-    <footer className="bg-zinc-950 text-zinc-300">
+    <footer className="bg-[#263a2d] text-[#e5e5dc]">
       {/* Main footer */}
-      <div className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1440px] px-5 pb-8 pt-16 sm:px-8 lg:px-14">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center gap-2">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-700 text-white">
-                <House size={24} />
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-[#e7c2a8]">
+                <House size={20} strokeWidth={1.6} />
               </span>
-              <span className="text-2xl font-bold tracking-tight text-white">
-                Rent<span className="text-green-400">Nest</span>
+              <span className="text-[1.4rem] font-semibold tracking-[-0.06em] text-white">
+                rent<span className="font-normal text-[#d3b39b]">nest</span>
               </span>
             </Link>
 
-            <p className="mt-5 max-w-sm text-sm leading-7 text-zinc-400">
-              Find a place that feels like home. Discover rental properties,
-              explore your options, and connect with property owners through
-              RentNest.
+            <p className="mt-5 max-w-sm text-sm leading-7 text-[#bdc6bc]">
+              A more considered way to find a home or share one. Built for the
+              people and places that make Bangladesh feel like home.
             </p>
 
             {/* Contact information */}
             <div className="mt-6 space-y-4">
               <a
                 href="mailto:support@rentnest.com"
-                className="flex items-center gap-3 text-sm transition hover:text-green-400"
+                className="flex items-center gap-3 text-sm transition hover:text-white"
               >
-                <Mail size={17} className="shrink-0 text-green-400" />
+                <Mail size={17} className="shrink-0 text-[#d3b39b]" />
                 support@rentnest.com
               </a>
 
-              <div className="flex items-center gap-3 text-sm text-zinc-400">
-                <MapPin size={17} className="shrink-0 text-green-400" />
+              <div className="flex items-center gap-3 text-sm text-[#bdc6bc]">
+                <MapPin size={17} className="shrink-0 text-[#d3b39b]" />
                 <span>Bangladesh</span>
               </div>
             </div>
@@ -83,7 +82,7 @@ export default function Footer({
 
           {/* Explore */}
           <div>
-            <h3 className="text-base font-semibold text-white">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-white">
               Explore
             </h3>
 
@@ -97,7 +96,7 @@ export default function Footer({
                         : link.href
                     }
                     prefetch={link.href.startsWith("/properties") ? false : undefined}
-                    className="text-sm text-zinc-400 transition hover:text-green-400"
+                    className="text-sm text-[#bdc6bc] transition hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -108,7 +107,7 @@ export default function Footer({
 
           {/* Company */}
           <div>
-            <h3 className="text-base font-semibold text-white">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-white">
               Company
             </h3>
 
@@ -117,7 +116,7 @@ export default function Footer({
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-zinc-400 transition hover:text-green-400"
+                    className="text-sm text-[#bdc6bc] transition hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -128,7 +127,7 @@ export default function Footer({
 
           {/* Legal */}
           <div>
-            <h3 className="text-base font-semibold text-white">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-white">
               Legal
             </h3>
 
@@ -137,7 +136,7 @@ export default function Footer({
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-zinc-400 transition hover:text-green-400"
+                    className="text-sm text-[#bdc6bc] transition hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -147,7 +146,7 @@ export default function Footer({
 
             <Link
               href="/contact"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-green-400 transition hover:text-green-300"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#d3b39b] transition hover:text-white"
             >
               Get in touch
               <ArrowUpRight size={16} />
@@ -156,12 +155,12 @@ export default function Footer({
         </div>
 
         {/* Newsletter CTA */}
-        <div className="mt-14 flex flex-col justify-between gap-5 rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 sm:flex-row sm:items-center sm:p-8">
+        <div className="mt-14 flex flex-col justify-between gap-5 border-y border-white/15 py-8 sm:flex-row sm:items-center">
           <div>
             <h3 className="text-lg font-semibold text-white">
               Ready to find your next home?
             </h3>
-            <p className="mt-2 text-sm leading-6 text-zinc-400">
+            <p className="mt-2 text-sm leading-6 text-[#bdc6bc]">
               Explore available properties and discover a place that suits you.
             </p>
           </div>
@@ -169,7 +168,7 @@ export default function Footer({
           <Link
             href="/properties"
             prefetch={false}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-green-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-600"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#f3f0e7] px-5 py-3 text-sm font-semibold text-[#2f5039] transition hover:bg-white"
           >
             Explore Properties
             <ArrowUpRight size={17} />
@@ -177,8 +176,8 @@ export default function Footer({
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 flex flex-col gap-5 border-t border-zinc-800 pt-7 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-zinc-500">
+        <div className="mt-7 flex flex-col gap-5 border-t border-white/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs tracking-wide text-[#aeb9ae]">
             © 2026 RentNest. All rights reserved.
           </p>
 

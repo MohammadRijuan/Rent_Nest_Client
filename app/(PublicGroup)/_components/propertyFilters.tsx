@@ -2,7 +2,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search, SlidersHorizontal, X, MapPin } from "lucide-react";
+import { Search, X, MapPin } from "lucide-react";
 import PropertyCard, { type Property } from "./propertyCard";
 
 type Props = {
@@ -70,24 +70,24 @@ export default function PropertyFilters({ properties }: Props) {
     bedrooms !== "all";
 
   const inputClass =
-    "w-full rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-700 outline-none transition focus:border-green-700 focus:ring-2 focus:ring-green-700/10";
+    "w-full rounded-xl border border-[#dedbd0] bg-[#fffefa] px-3 py-3 text-sm text-[#35463a] outline-none transition focus:border-[#55705a] focus:ring-2 focus:ring-[#55705a]/10";
 
   return (
     <div>
-      {/* Search and filters */}
-      <div className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-6">
-        <div className="flex items-center gap-2">
-          <SlidersHorizontal size={19} className="text-green-800" />
-          <h2 className="font-semibold text-zinc-900">
-            Find your perfect property
+      <div className="rounded-2xl border border-[#e4e0d5] bg-[#f7f5ee] p-4 sm:p-6">
+        <div className="mb-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#9a5c40]">
+            Refine your search
+          </p>
+          <h2 className="mt-1 font-serif text-2xl text-[#26342a]">
+            The details that matter to you.
           </h2>
         </div>
 
-        {/* Search input */}
         <div className="relative mt-5">
           <Search
-            size={19}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"
+            size={18}
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-[#858b80]"
           />
 
           <input
@@ -100,12 +100,11 @@ export default function PropertyFilters({ properties }: Props) {
           />
         </div>
 
-        {/* Filters */}
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <label
               htmlFor="category"
-              className="mb-2 block text-sm font-medium text-zinc-700"
+              className="mb-2 block text-xs font-semibold text-[#59635a]"
             >
               Property category
             </label>
@@ -129,7 +128,7 @@ export default function PropertyFilters({ properties }: Props) {
           <div>
             <label
               htmlFor="rent"
-              className="mb-2 block text-sm font-medium text-zinc-700"
+              className="mb-2 block text-xs font-semibold text-[#59635a]"
             >
               Maximum monthly rent
             </label>
@@ -152,7 +151,7 @@ export default function PropertyFilters({ properties }: Props) {
           <div>
             <label
               htmlFor="bedrooms"
-              className="mb-2 block text-sm font-medium text-zinc-700"
+              className="mb-2 block text-xs font-semibold text-[#59635a]"
             >
               Bedrooms
             </label>
@@ -175,7 +174,7 @@ export default function PropertyFilters({ properties }: Props) {
               type="button"
               onClick={clearFilters}
               disabled={!hasFilters}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-200 px-4 py-3 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#d9d6cb] px-4 py-3 text-sm font-semibold text-[#59635a] transition hover:bg-[#fffefa] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <X size={16} />
               Clear filters
@@ -184,38 +183,36 @@ export default function PropertyFilters({ properties }: Props) {
         </div>
       </div>
 
-      {/* Results count */}
-      <div className="mt-7 flex items-center justify-between">
-        <p className="text-sm text-zinc-500">
+      <div className="mt-8 flex items-center justify-between border-b border-[#e4e0d5] pb-4">
+        <p className="text-sm text-[#687067]">
           Showing{" "}
-          <span className="font-semibold text-zinc-900">
+          <span           className="font-semibold text-[#26342a]">
             {filteredProperties.length}
           </span>{" "}
           of{" "}
-          <span className="font-semibold text-zinc-900">
+          <span           className="font-semibold text-[#26342a]">
             {properties.length}
           </span>{" "}
           properties
         </p>
       </div>
 
-      {/* Property results */}
       {filteredProperties.length === 0 ? (
-        <div className="mt-5 rounded-2xl border border-dashed border-zinc-300 bg-white px-6 py-16 text-center">
-          <MapPin className="mx-auto h-10 w-10 text-zinc-400" />
+        <div className="mt-5 rounded-2xl border border-dashed border-[#d6d3c7] bg-[#fffefa] px-6 py-16 text-center">
+          <MapPin className="mx-auto h-10 w-10 text-[#9a5c40]" />
 
-          <h2 className="mt-4 text-lg font-semibold text-zinc-900">
+          <h2 className="mt-4 font-serif text-2xl text-[#26342a]">
             No matching properties
           </h2>
 
-          <p className="mt-2 text-sm text-zinc-500">
+          <p className="mt-2 text-sm text-[#687067]">
             Try changing your search or adjusting the filters.
           </p>
 
           <button
             type="button"
             onClick={clearFilters}
-            className="mt-5 rounded-lg bg-green-800 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-green-900"
+            className="mt-5 rounded-full bg-[#2f5039] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#243f2d]"
           >
             Reset filters
           </button>

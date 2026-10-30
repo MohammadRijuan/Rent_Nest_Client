@@ -14,7 +14,7 @@ import {
 import { NavbarProps } from "@/lib/types";
 import { Logout } from "@/service/logout";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -30,6 +30,7 @@ export default function Navbar({ user }: NavbarProps) {
   const isLoggedIn = Boolean(user?.success);
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const getDashboardRoute = () => {
     const role = user?.data?.profile?.role;
@@ -72,31 +73,32 @@ export default function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header  className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-[#e5e2d9] bg-[#fbfaf6]/95 backdrop-blur-xl">
       <nav
-        className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
+        className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-14"
         aria-label="Main navigation"
-        
       >
-        {/* Logo */}
-        <Link href="/" className="flex shrink-0 items-center gap-2">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-800 text-white">
-            <House size={22} />
+        <Link href="/" className="flex shrink-0 items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#2f5039] text-[#f3f0e7]">
+            <House size={19} strokeWidth={1.7} />
           </span>
-
-          <span className="text-2xl font-bold tracking-tight text-zinc-900">
-            Rent<span className="text-green-700">Nest</span>
+          <span className="text-[1.35rem] font-semibold tracking-[-0.06em] text-[#25332a]">
+            rent<span className="font-normal text-[#9a5c40]">nest</span>
           </span>
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden items-center gap-8 lg:flex" suppressHydrationWarning>
+        <div className="hidden items-center gap-9 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               prefetch={link.href === "/properties" ? false : undefined}
-              className="text-sm font-medium text-zinc-600 transition hover:text-green-800"
+              aria-current={pathname === link.href ? "page" : undefined}
+              className={`relative py-2 text-[13px] font-medium transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:origin-left after:bg-[#9a5c40] after:transition-transform ${
+                pathname === link.href
+                  ? "text-[#2f5039] after:scale-x-100"
+                  : "text-[#687067] after:scale-x-0 hover:text-[#2f5039] hover:after:scale-x-100"
+              }`}
             >
               {link.label}
             </Link>
@@ -110,11 +112,11 @@ export default function Navbar({ user }: NavbarProps) {
               <button
                 type="button"
                 onClick={() => setIsProfileOpen((open) => !open)}
-                className="flex items-center gap-2 rounded-full border border-zinc-200 p-1.5 pr-3 transition hover:bg-zinc-50"
+                className="flex items-center gap-2 rounded-full border border-[#dedbd0] p-1.5 pr-3 transition hover:bg-white"
                 aria-expanded={isProfileOpen}
                 aria-label="Open profile menu"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-green-100 text-green-800">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e6ebe2] text-[#45644d]">
                   <UserRound size={20} />
                 </span>
                 <span className="text-sm font-semibold text-zinc-800">
@@ -128,11 +130,11 @@ export default function Navbar({ user }: NavbarProps) {
               </button>
 
               {isProfileOpen && (
-                <div className="absolute right-0 top-full mt-3 w-56 overflow-hidden rounded-xl border border-zinc-200 bg-white p-2 shadow-xl">
+                <div                 className="absolute right-0 top-full mt-3 w-56 overflow-hidden rounded-2xl border border-[#e5e2d9] bg-[#fbfaf6] p-2 shadow-[0_20px_50px_-25px_rgba(32,43,35,0.35)]">
                   <Link
                     href="/profile"
                     onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-zinc-700 transition hover:bg-green-50 hover:text-green-800"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-[#465248] transition hover:bg-[#edf0e9] hover:text-[#2f5039]"
                   >
                     <UserRound size={18} />
                     My Profile
@@ -141,19 +143,19 @@ export default function Navbar({ user }: NavbarProps) {
                   <Link
                     href={getDashboardRoute()}
                     onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-zinc-700 transition hover:bg-green-50 hover:text-green-800"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-[#465248] transition hover:bg-[#edf0e9] hover:text-[#2f5039]"
                   >
                     <LayoutDashboard size={18} />
                     Dashboard
                   </Link>
 
-                  <div className="my-1 border-t border-zinc-100" />
+                  <div className="my-1 border-t border-[#e8e5dc]" />
 
                   <button
                     type="button"
                     onClick={handleLogout}
                     disabled={isLoggingOut}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-600 transition hover:bg-red-50 disabled:cursor-wait disabled:opacity-60"
+                    className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-red-700 transition hover:bg-red-50 disabled:cursor-wait disabled:opacity-60"
                   >
                     <LogOut size={18} />
                     {isLoggingOut ? "Logging out..." : "Logout"}
@@ -165,14 +167,14 @@ export default function Navbar({ user }: NavbarProps) {
             <>
               <Link
                 href="/login"
-                className="rounded-lg px-4 py-2.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-100"
+                className="rounded-full px-4 py-2.5 text-sm font-semibold text-[#465248] transition hover:bg-[#eeece4]"
               >
                 Log in
               </Link>
 
               <Link
                 href="/register"
-                className="rounded-lg bg-green-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-900"
+                className="rounded-full bg-[#2f5039] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#243f2d]"
               >
                 Sign up
               </Link>
@@ -186,7 +188,7 @@ export default function Navbar({ user }: NavbarProps) {
         <button
           type="button"
           onClick={() => setIsMenuOpen((open) => !open)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-zinc-800 hover:bg-zinc-100 lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full text-[#344338] transition hover:bg-[#eeece4] lg:hidden"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMenuOpen}
         >
@@ -196,7 +198,7 @@ export default function Navbar({ user }: NavbarProps) {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="border-t border-zinc-200 bg-white px-4 py-4 shadow-lg lg:hidden">
+        <div className="border-t border-[#e5e2d9] bg-[#fbfaf6] px-5 py-4 shadow-lg lg:hidden">
           <div className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
@@ -204,7 +206,12 @@ export default function Navbar({ user }: NavbarProps) {
                 href={link.href}
                 prefetch={link.href === "/properties" ? false : undefined}
                 onClick={() => setIsMenuOpen(false)}
-                className="rounded-lg px-3 py-3 text-sm font-medium text-zinc-700 hover:bg-green-50"
+                aria-current={pathname === link.href ? "page" : undefined}
+                className={`rounded-xl px-3 py-3 text-sm font-medium ${
+                  pathname === link.href
+                    ? "bg-[#edf0e9] text-[#2f5039]"
+                    : "text-[#465248] hover:bg-[#edf0e9]"
+                }`}
               >
                 {link.label}
               </Link>

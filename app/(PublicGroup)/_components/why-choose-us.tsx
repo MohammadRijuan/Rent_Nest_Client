@@ -34,20 +34,20 @@ const features = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="bg-white py-20">
+    <section className="bg-[#f3f0e7] py-20 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="mx-auto mb-14 max-w-2xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary">
-            Why RentNest
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#9a5c40]">
+            The RentNest difference
           </p>
 
-          <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
-            A Better Way to Find Your Next Home
+          <h2 className="font-serif text-3xl font-medium leading-tight tracking-[-0.03em] text-[#202b23] md:text-5xl">
+            Renting should feel like a beginning.
           </h2>
 
-          <p className="mt-4 text-gray-500">
-            We make property discovery and rental management simpler for
-            tenants and landlords.
+          <p className="mx-auto mt-4 max-w-xl leading-7 text-[#687067]">
+            Less guesswork for tenants. A more considered way for landlords to
+            share a place.
           </p>
         </div>
 
@@ -56,16 +56,16 @@ const WhyChooseUs = () => {
             const Icon = feature.icon;
 
             return (
-              <div key={feature.title} className="text-center">
-                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <Icon size={30} strokeWidth={1.6} />
+              <div key={feature.title} className="border-t border-[#d6d3c7] pt-5">
+                <div className="mb-8 flex h-11 w-11 items-center justify-center rounded-full border border-[#b8c2b5] text-[#45644d]">
+                  <Icon size={21} strokeWidth={1.5} />
                 </div>
 
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-semibold tracking-tight text-[#26342a]">
                   {feature.title}
                 </h3>
 
-                <p className="mt-3 text-sm leading-7 text-gray-500">
+                <p className="mt-3 text-sm leading-7 text-[#687067]">
                   {feature.description}
                 </p>
               </div>

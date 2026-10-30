@@ -55,19 +55,21 @@ export default function DashboardSidebar({
   return (
     <Sidebar
       collapsible="offcanvas"
-      className="border-r"
+      className="border-r border-[#e3e1d7] bg-[#f7f6f0]"
     >
       <SidebarContent>
         <SidebarGroup>
           <Link
             href="/"
-            className="flex items-center gap-2 rounded-lg px-3 py-3 text-lg font-bold"
+            className="flex items-center gap-3 rounded-xl px-3 py-4 text-[1.15rem] font-semibold tracking-tight text-[#26342a]"
           >
-            <span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              R
+            <span className="flex size-9 items-center justify-center rounded-full bg-[#2f5039] text-[#f3f0e7]">
+              <Home className="size-4" />
             </span>
-            RentNest
-            <Home className="ml-auto size-4 text-muted-foreground" />
+            rent<span className="-ml-3 font-normal text-[#9a5c40]">nest</span>
+            <span className="ml-auto text-[10px] font-medium uppercase tracking-[0.16em] text-[#82897f]">
+              Space
+            </span>
           </Link>
         </SidebarGroup>
 
@@ -85,9 +87,9 @@ export default function DashboardSidebar({
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${active
-                          ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
-                          : "text-sidebar-foreground hover:bg-sidebar-accent"
+                      className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${active
+                          ? "bg-[#e7ebe3] font-semibold text-[#2f5039]"
+                          : "text-[#657066] hover:bg-[#ecece4] hover:text-[#26342a]"
                         }`}
                     >
                       <item.icon className="size-4 shrink-0" />
@@ -107,7 +109,7 @@ export default function DashboardSidebar({
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="mt-auto border-t p-3">
+      <SidebarFooter className="mt-auto border-t border-[#e3e1d7] p-3">
         <div className="relative">
           {/* Only this profile button is visible initially. */}
           <button
@@ -117,9 +119,9 @@ export default function DashboardSidebar({
             }}
             aria-expanded={menuOpen}
             aria-haspopup="true"
-            className="flex w-full items-center gap-3 rounded-lg p-2 text-left hover:bg-sidebar-accent"
+            className="flex w-full items-center gap-3 rounded-xl p-2 text-left transition hover:bg-[#ecece4]"
           >
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-muted">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#e7ebe3] text-[#45644d]">
               <UserRound className="size-5" />
             </span>
 
@@ -140,8 +142,8 @@ export default function DashboardSidebar({
 
           {/* The dropdown only exists while menuOpen is true. */}
           {menuOpen && (
-            <div className="absolute bottom-full left-0 z-[100] mb-2 w-full min-w-48 rounded-lg border bg-popover p-1 text-popover-foreground shadow-lg">
-              <div className="border-b px-3 py-2">
+            <div className="absolute bottom-full left-0 z-[100] mb-2 w-full min-w-48 rounded-xl border border-[#e3e1d7] bg-[#fbfaf6] p-1 text-[#26342a] shadow-lg">
+              <div className="border-b border-[#e3e1d7] px-3 py-2">
                 <p className="truncate text-sm font-medium">{name}</p>
                 <p className="truncate text-xs text-muted-foreground">
                   {email || role || "Account"}

@@ -15,18 +15,18 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-svh w-full">
+      <div className="flex min-h-svh w-full bg-[#f7f6f0]">
         <DashboardSidebar user={user} />
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="flex min-h-14 items-center gap-3 border-b px-4 sm:px-6 lg:hidden">
+          <header className="flex min-h-14 items-center gap-3 border-b border-[#e3e1d7] bg-[#fbfaf6] px-4 sm:px-6 lg:hidden">
             <SidebarTrigger aria-label="Toggle navigation" />
-            <span className="truncate text-sm font-semibold">
-              RentNest
+            <span className="truncate text-sm font-semibold tracking-tight text-[#2f5039]">
+              rentnest
             </span>
           </header>
 
-          <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+          <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-9">
             <DashboardHeader user={user} />
             <div className="w-full min-w-0">{children}</div>
           </main>

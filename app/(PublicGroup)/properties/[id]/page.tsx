@@ -34,112 +34,113 @@ export default async function PropertyDetailsPage({ params }: IdProps) {
         : [];
 
     return (
-        <main className="min-h-screen bg-[#FAFAF7]">
+        <main className="min-h-screen bg-[#fbfaf6]">
             <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
                 <Link
                     href="/properties"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-green-800 hover:text-green-950"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-[#45644d] transition-colors hover:text-[#26342a]"
                 >
                     <ArrowLeft size={17} />
                     Back to properties
                 </Link>
 
-                <div className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
-                    {/* Property banner */}
-                    <div className="flex h-56 items-center justify-center bg-gradient-to-br from-green-100 via-stone-100 to-green-50 sm:h-72">
-                        <Building2 size={76} strokeWidth={1.2} className="text-green-800/40" />
+                <div className="mt-6 overflow-hidden rounded-3xl border border-[#e4e0d5] bg-[#fffefa]">
+                    <div className="relative flex h-56 items-center justify-center overflow-hidden bg-[#e8ebe4] sm:h-72">
+                        <div className="absolute h-56 w-56 rounded-t-full border border-[#8da08b]/50" />
+                        <div className="absolute h-40 w-40 rounded-t-full border border-[#8da08b]/35" />
+                        <Building2 size={76} strokeWidth={1} className="relative text-[#55705a]/70" />
                     </div>
 
-                    <div className="p-5 sm:p-8">
+                    <div className="p-5 sm:p-9">
                         <div className="flex flex-wrap items-center justify-between gap-3">
-                            <span className="rounded-full bg-green-100 px-3 py-1.5 text-xs font-semibold capitalize text-green-800">
+                            <span className="rounded-full bg-[#e7ebe3] px-3 py-1.5 text-xs font-semibold capitalize text-[#45644d]">
                                 {property.category?.name ?? "Property"}
                             </span>
 
-                            <span className="inline-flex items-center gap-1.5 rounded-full bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-700">
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f0eee7] px-3 py-1.5 text-xs font-semibold text-[#59635a]">
                                 <CheckCircle2 size={14} />
                                 {property.status}
                             </span>
                         </div>
 
-                        <h1 className="mt-5 text-2xl font-bold text-zinc-900 sm:text-3xl">
+                        <h1 className="mt-5 font-serif text-3xl font-medium tracking-tight text-[#26342a] sm:text-4xl">
                             {property.titles}
                         </h1>
 
-                        <p className="mt-3 flex items-center gap-2 text-sm text-zinc-500">
-                            <MapPin size={18} className="shrink-0 text-green-800" />
+                        <p className="mt-3 flex items-center gap-2 text-sm text-[#687067]">
+                            <MapPin size={18} className="shrink-0 text-[#9a5c40]" />
                             {property.location}
                         </p>
 
-                        <p className="mt-6 text-3xl font-bold text-green-800">
+                        <p className="mt-6 text-3xl font-semibold tracking-tight text-[#2f5039]">
                             ৳{Number(property.rent).toLocaleString("en-BD")}
-                            <span className="ml-2 text-sm font-normal text-zinc-500">
+                            <span className="ml-2                             text-sm font-normal text-[#687067]">
                                 / month
                             </span>
                         </p>
 
-                        <div className="mt-7 grid grid-cols-2 gap-4 border-y border-zinc-100 py-5">
+                        <div className="mt-7 grid grid-cols-2 gap-4 border-y border-[#ece9df] py-5">
                             <div className="flex items-center gap-3">
-                                <BedDouble size={22} className="text-green-800" />
+                                <BedDouble size={22} className="text-[#55705a]" />
                                 <div>
-                                    <p className="text-sm font-semibold text-zinc-900">
+                                    <p className="text-sm font-semibold text-[#26342a]">
                                         {property.bedrooms} Bedrooms
                                     </p>
-                                    <p className="text-xs text-zinc-500">Sleeping spaces</p>
+                                    <p className="text-xs text-[#858b80]">Sleeping spaces</p>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <Bath size={22} className="text-green-800" />
+                                <Bath size={22} className="text-[#55705a]" />
                                 <div>
-                                    <p className="text-sm font-semibold text-zinc-900">
+                                    <p className="text-sm font-semibold text-[#26342a]">
                                         {property.bathrooms} Bathrooms
                                     </p>
-                                    <p className="text-xs text-zinc-500">Bathroom facilities</p>
+                                    <p className="text-xs text-[#858b80]">Bathroom facilities</p>
                                 </div>
                             </div>
                         </div>
 
                         <section className="mt-7">
-                            <h2 className="text-lg font-bold text-zinc-900">
+                            <h2 className="font-serif text-xl font-medium text-[#26342a]">
                                 About this property
                             </h2>
-                            <p className="mt-3 whitespace-pre-line text-sm leading-7 text-zinc-600">
+                            <p className="mt-3 whitespace-pre-line text-sm leading-7 text-[#59635a]">
                                 {property.description || "No description provided."}
                             </p>
                         </section>
 
                         <section className="mt-7">
-                            <h2 className="text-lg font-bold text-zinc-900">Amenities</h2>
+                            <h2 className="font-serif text-xl font-medium text-[#26342a]">Amenities</h2>
 
                             {amenities.length > 0 ? (
                                 <ul className="mt-3 flex flex-wrap gap-2">
                                     {amenities.map((amenity) => (
                                         <li
                                             key={amenity}
-                                            className="rounded-lg bg-zinc-100 px-3 py-2 text-sm text-zinc-700"
+                                            className="rounded-full bg-[#f2f0e9] px-3 py-2 text-sm text-[#59635a]"
                                         >
                                             {amenity}
                                         </li>
                                     ))}
                                 </ul>
                             ) : (
-                                <p className="mt-2 text-sm text-zinc-500">
+                                <p className="mt-2 text-sm text-[#687067]">
                                     No amenities listed.
                                 </p>
                             )}
                         </section>
 
-                        <div className="mt-8 border-t border-zinc-100 pt-6">
+                        <div className="mt-8 border-t border-[#ece9df] pt-6">
                             {property.status === "AVAILABLE" ? (
                                 <Link
                                     href={`/properties/${property.id}/request`}
-                                    className="inline-flex w-full items-center justify-center rounded-xl bg-green-800 px-5 py-3 font-semibold text-white transition hover:bg-green-900 sm:w-auto"
+                                    className="inline-flex w-full items-center justify-center rounded-full bg-[#2f5039] px-6 py-3 font-semibold text-white transition hover:bg-[#243f2d] sm:w-auto"
                                 >
                                     Request this property
                                 </Link>
                             ) : (
-                                <p className="text-sm font-medium text-zinc-500">
+                                <p className="text-sm font-medium text-[#687067]">
                                     This property is currently unavailable.
                                 </p>
                             )}

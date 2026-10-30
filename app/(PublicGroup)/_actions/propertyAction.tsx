@@ -1,5 +1,7 @@
 "use server";
 
+import { unstable_rethrow } from "next/navigation";
+
 const PropertyAction = async () => {
   try {
     const res = await fetch(
@@ -28,6 +30,7 @@ const PropertyAction = async () => {
       data,
     };
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Property fetch error:", error);
 
     return {
