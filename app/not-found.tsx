@@ -12,11 +12,11 @@ import { getMe } from "@/service/getMe";
 
 export default async function NotFound() {
 
-  const user = await getMe()
+  // const user = await getMe()
   return (
 
     <>
-      <Navbar user={user} />
+      {/* <Navbar user={user} /> */}
 
       <main className="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-[#FAFAF7] px-4 py-16 sm:px-6 lg:px-8">
         {/* Background decoration */}
@@ -87,7 +87,7 @@ export default async function NotFound() {
         </div>
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

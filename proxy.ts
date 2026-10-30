@@ -7,7 +7,7 @@ import { JwtPayload } from 'jsonwebtoken';
 
 
 const AUTH_ROUTES = ["/login","/register"]
-const PUBLIC_ROUTES = ["/","/contact","/privacy-policy","/terms_and_conditions"]
+const PUBLIC_ROUTES = ["/","/properties","/contact","/privacy-policy","/terms_and_conditions"]
 
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
@@ -18,10 +18,10 @@ export async function proxy(request: NextRequest) {
      const cookieStore = await cookies();
 
      let accessToken = request.cookies.get("accessToken")?.value;
-     let refreshToken = request.cookies.get("refreshToken")?.value;
+     const refreshToken = request.cookies.get("refreshToken")?.value;
 
      let decodedAccessToken = accessToken ? jwtUtils.verifyToken(accessToken, process.env.JWT_ACCESS_SECRET as string) : null
-     let decodedRefreshToken = refreshToken ? jwtUtils.verifyToken(refreshToken, process.env.JWT_ACCESS_SECRET as string) : null
+     const decodedRefreshToken = refreshToken ? jwtUtils.verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET as string) : null
 
 
      if(!decodedAccessToken?.success && decodedRefreshToken?.success){
@@ -59,11 +59,11 @@ export async function proxy(request: NextRequest) {
      //user is logged in and trying to access login or register page, redirect to dashboard or root home page
     if(accessToken && AUTH_ROUTES.includes(pathname)){
         if(userRole === "TENANT"){
-            return NextResponse.redirect(new URL('/dashboard', request.url));
+            return NextResponse.redirect(new URL('/dashboard/tenant', request.url));
         }else if(userRole === "ADMIN"){
-            return NextResponse.redirect(new URL('/admin-dashboard', request.url));
+            return NextResponse.redirect(new URL('/dashboard/admin', request.url));
         }else if(userRole === "LANDLORD"){
-            return NextResponse.redirect(new URL('/landlord-dashboard', request.url));
+            return NextResponse.redirect(new URL('/dashboard/landlord', request.url));
         }else{
             return NextResponse.redirect(new URL('/', request.url));
         }
@@ -84,19 +84,26 @@ export async function proxy(request: NextRequest) {
     }
 
 
-    // Authorization : Role based access control
-    if(pathname.startsWith("/dashboard") && userRole !== "USER"){
-        return NextResponse.redirect(new URL('/not-found', request.url));
-    }else if(pathname.startsWith("/admin-dashboard") && userRole !== "ADMIN"){
-        return NextResponse.redirect(new URL('/not-found', request.url));
-    }else if(pathname.startsWith("/author-dashboard") && userRole !== "AUTHOR"){
-        return NextResponse.redirect(new URL('/not-found', request.url));
+    // Keep users on the dashboard that matches their role if they follow a stale link.
+    const roleDashboards: Record<string, string> = {
+        TENANT: "/dashboard/tenant",
+        ADMIN: "/dashboard/admin",
+        LANDLORD: "/dashboard/landlord",
+    };
+    const requestedDashboard = Object.keys(roleDashboards).find((role) => {
+        const dashboardPath = roleDashboards[role];
+        return pathname === dashboardPath || pathname.startsWith(`${dashboardPath}/`);
+    });
+
+    if (requestedDashboard && userRole !== requestedDashboard) {
+        const destination =
+            typeof userRole === "string" ? roleDashboards[userRole] : undefined;
+        return NextResponse.redirect(
+            new URL(destination ?? "/not-found", request.url)
+        );
     }
 
-
-
-
-
+    return NextResponse.next();
 }
 
 // Alternatively, you can use a default export:
@@ -104,6 +111,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-         '/((?!api|_next/static|favicon.ico|_next/image|.*\\.png$).*)'
+         '/((?!api|_next/static|favicon.ico|_next/image|\\.well-known|.*\\.png$).*)'
   ]
 }

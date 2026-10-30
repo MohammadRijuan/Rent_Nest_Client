@@ -2,10 +2,10 @@ import Link from "next/link";
 import {
   House,
   MapPin,
-  Phone,
   Mail,
   ArrowUpRight,
 } from "lucide-react";
+import type { NavbarProps } from "@/lib/types";
 
 const footerLinks = {
   explore: [
@@ -27,7 +27,21 @@ const footerLinks = {
   ],
 };
 
-export default function Footer() {
+export default function Footer({
+  user,
+}: {
+  user?: NavbarProps["user"];
+}) {
+  const role = user?.data?.profile?.role;
+  const dashboardHref =
+    role === "ADMIN"
+      ? "/admin-dashboard"
+      : role === "LANDLORD"
+        ? "/landlord-dashboard"
+        : role === "TENANT"
+          ? "/dashboard"
+          : "/login";
+
   return (
     <footer className="bg-zinc-950 text-zinc-300">
       {/* Main footer */}
@@ -77,7 +91,11 @@ export default function Footer() {
               {footerLinks.explore.map((link) => (
                 <li key={link.label}>
                   <Link
-                    href={link.href}
+                    href={
+                      link.label === "My Dashboard"
+                        ? dashboardHref
+                        : link.href
+                    }
                     className="text-sm text-zinc-400 transition hover:text-green-400"
                   >
                     {link.label}

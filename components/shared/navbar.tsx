@@ -31,6 +31,21 @@ export default function Navbar({ user }: NavbarProps) {
 
   const router = useRouter();
 
+  const getDashboardRoute = () => {
+    const role = user?.data?.profile?.role;
+
+
+    if (role === "ADMIN") {
+      return "/dashboard/admin";
+    } else if (role === "LANDLORD") {
+      return "/dashboard/landlord";
+    } else if (role === "TENANT") {
+      return "/dashboard/tenant";
+    } else {
+      return "/dashboard/tenant";
+    }
+  };
+
   const handleLogout = async () => {
     if (isLoggingOut) return;
 
@@ -57,10 +72,11 @@ export default function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur">
+    <header  className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur">
       <nav
         className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
         aria-label="Main navigation"
+        
       >
         {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center gap-2">
@@ -74,7 +90,7 @@ export default function Navbar({ user }: NavbarProps) {
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden items-center gap-8 lg:flex">
+        <div className="hidden items-center gap-8 lg:flex" suppressHydrationWarning>
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -122,7 +138,7 @@ export default function Navbar({ user }: NavbarProps) {
                   </Link>
 
                   <Link
-                    href="/dashboard"
+                    href={getDashboardRoute()}
                     onClick={() => setIsProfileOpen(false)}
                     className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-zinc-700 transition hover:bg-green-50 hover:text-green-800"
                   >
@@ -206,7 +222,7 @@ export default function Navbar({ user }: NavbarProps) {
                 </Link>
 
                 <Link
-                  href="/dashboard"
+                  href={getDashboardRoute()}
                   onClick={() => setIsMenuOpen(false)}
                   className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm text-zinc-700 hover:bg-green-50"
                 >

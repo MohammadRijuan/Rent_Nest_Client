@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import type { IUser } from "@/lib/types";
 
-export const getMe = async (): Promise<IUser | null> => {
+export const getMe = async(): Promise<IUser | null> => {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("accessToken")?.value || null;
 
@@ -11,7 +11,8 @@ export const getMe = async (): Promise<IUser | null> => {
         return null;
     }
 
-    const res = await fetch(`${process.env.BACKEND_API_URL}/api/user/me`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/auth/me`, {
+        method:"GET",
         headers : {
             Cookie : `accessToken=${accessToken}`
         },

@@ -19,7 +19,7 @@ const publicGroupLayout = async(
         <div suppressHydrationWarning>
             <Navbar user = {user}/>
             {children}
-            <Footer/>
+            <Footer user={user} />
 
         </div>
     );
