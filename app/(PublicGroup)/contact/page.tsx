@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  ArrowLeft,
   ArrowRight,
   Clock,
   Mail,
@@ -35,7 +34,7 @@ const contactInfo = [
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[#FAFAF7]">
+    <main className="contact-editorial min-h-screen bg-[#fbfaf6]">
       {/* Hero */}
       <section className="border-b border-zinc-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
@@ -47,7 +46,7 @@ export default function ContactPage() {
             </span>
 
             <h1 className="mt-6 text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl">
-              We're here to help you
+              We&apos;re here to help you
               <span className="text-green-700"> feel at home.</span>
             </h1>
 
@@ -69,7 +68,7 @@ export default function ContactPage() {
             </h2>
 
             <p className="mt-3 leading-7 text-zinc-600">
-              Choose the most convenient way to reach us. We're happy to help
+              Choose the most convenient way to reach us. We&apos;re happy to help
               with your rental journey.
             </p>
 
@@ -113,7 +112,7 @@ export default function ContactPage() {
               <div className="flex items-center gap-3">
                 <Clock size={20} className="text-green-800" />
                 <h3 className="font-semibold text-zinc-900">
-                  We're ready to help
+                  We&apos;re ready to help
                 </h3>
               </div>
               <p className="mt-3 text-sm leading-6 text-zinc-600">
@@ -214,7 +213,7 @@ export default function ContactPage() {
               </button>
 
               <p className="text-xs leading-5 text-zinc-500">
-                Please don't include passwords or other sensitive information
+                Please don&apos;t include passwords or other sensitive information
                 in your message.
               </p>
             </form>

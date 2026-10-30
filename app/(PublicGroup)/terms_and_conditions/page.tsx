@@ -1,10 +1,10 @@
 
 import Link from "next/link";
-import { ArrowLeft, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 
 export default function TermsPage() {
     return (
-        <main className="min-h-screen bg-[#FAFAF7]">
+        <main className="legal-editorial min-h-screen bg-[#fbfaf6]">
             <section className="border-b border-zinc-200 bg-white">
                 <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
 
@@ -150,7 +150,7 @@ export default function TermsPage() {
                             Disrupt the website, distribute malware, or abuse its services.
                         </li>
                         <li>
-                            Collect or misuse other users' personal information without a
+                            Collect or misuse other users&apos; personal information without a
                             lawful basis.
                         </li>
                     </ul>
@@ -210,7 +210,7 @@ export default function TermsPage() {
                     </h2>
                     <p className="mt-4 leading-7 text-zinc-600">
                         To the extent permitted by applicable law, RentNest is provided
-                        on an "as is" and "as available" basis. We do not guarantee
+                        on an &quot;as is&quot; and &quot;as available&quot; basis. We do not guarantee
                         uninterrupted availability, error-free operation, listing
                         accuracy, property availability, or the actions of other users.
                         Nothing in these terms excludes a warranty or right that cannot

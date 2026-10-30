@@ -16,7 +16,7 @@ const ProfilePage = async () => {
   if (!success) {
     if (message === "UNAUTHORIZED") {
       return (
-        <main className="flex min-h-[60vh] items-center justify-center px-4">
+        <main className="profile-editorial flex min-h-[60vh] items-center justify-center px-4">
           <div className="text-center">
             <CircleUserRound className="mx-auto mb-4 h-14 w-14 text-gray-300" />
             <h1 className="text-xl font-semibold text-gray-900">
@@ -31,7 +31,7 @@ const ProfilePage = async () => {
     }
 
     return (
-      <main className="flex min-h-[60vh] items-center justify-center px-4">
+      <main className="profile-editorial flex min-h-[60vh] items-center justify-center px-4">
         <p className="text-sm text-gray-500">
           Unable to load profile. Please try again.
         </p>
@@ -60,7 +60,7 @@ const ProfilePage = async () => {
     .toUpperCase();
 
   return (
-    <main className="min-h-screen bg-[#FAFAF7] px-4 py-10 sm:px-6 lg:px-8">
+    <main className="profile-editorial min-h-screen bg-[#fbfaf6] px-4 py-10 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl">
         {/* Page heading */}
         <div className="mb-8">

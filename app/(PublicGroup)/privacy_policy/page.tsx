@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { ArrowLeft, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-screen bg-[#FAFAF7]">
+    <main className="legal-editorial min-h-screen bg-[#fbfaf6]">
       <section className="border-b border-zinc-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
           
@@ -198,7 +198,7 @@ export default function PrivacyPolicyPage() {
 
         <section>
           <h2 className="text-2xl font-bold text-zinc-900">
-            10. Children's Privacy
+            10. Children&apos;s Privacy
           </h2>
           <p className="mt-4 leading-7 text-zinc-600">
             RentNest is not intended to knowingly collect personal information

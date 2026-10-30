@@ -5,7 +5,6 @@ import { useState } from "react";
 import {
   Menu,
   X,
-  House,
   UserRound,
   LayoutDashboard,
   LogOut,
@@ -15,6 +14,7 @@ import { NavbarProps } from "@/lib/types";
 import { Logout } from "@/service/logout";
 import { toast } from "sonner";
 import { usePathname, useRouter } from "next/navigation";
+import BrandMark from "./brandMark";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -78,13 +78,8 @@ export default function Navbar({ user }: NavbarProps) {
         className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-14"
         aria-label="Main navigation"
       >
-        <Link href="/" className="flex shrink-0 items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#2f5039] text-[#f3f0e7]">
-            <House size={19} strokeWidth={1.7} />
-          </span>
-          <span className="text-[1.35rem] font-semibold tracking-[-0.06em] text-[#25332a]">
-            rent<span className="font-normal text-[#9a5c40]">nest</span>
-          </span>
+        <Link href="/" className="flex shrink-0 items-center">
+          <BrandMark />
         </Link>
 
         <div className="hidden items-center gap-9 lg:flex">

@@ -4,6 +4,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import DashboardSidebar from "../_components/dashboardSidebar";
 import DashboardHeader from "../_components/dashboardHeader";
 import { getProfile } from "@/app/(PublicGroup)/_actions/profileAction";
+import BrandMark from "@/components/shared/brandMark";
 
 export default async function DashboardLayout({
   children,
@@ -21,12 +22,12 @@ export default async function DashboardLayout({
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="flex min-h-14 items-center gap-3 border-b border-[#e3e1d7] bg-[#fbfaf6] px-4 sm:px-6 lg:hidden">
             <SidebarTrigger aria-label="Toggle navigation" />
-            <span className="truncate text-sm font-semibold tracking-tight text-[#2f5039]">
-              rentnest
+            <span className="truncate">
+              <BrandMark className="scale-90 origin-left" />
             </span>
           </header>
 
-          <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-9">
+          <main className="dashboard-theme min-w-0 flex-1 p-4 sm:p-6 lg:p-9">
             <DashboardHeader user={user} />
             <div className="w-full min-w-0">{children}</div>
           </main>

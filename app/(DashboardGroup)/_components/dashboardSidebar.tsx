@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ChevronUp, LogOut, Home, UserRound } from "lucide-react";
+import { ChevronUp, LogOut, UserRound } from "lucide-react";
 
 import {
   Sidebar,
@@ -19,6 +19,7 @@ import {
 import type { ISidebarItem } from "@/lib/types";
 import { sidebarMenuItems } from "../_config/sidebarMenuItems";
 import { LogoutAndRedirect } from "@/service/logout";
+import BrandMark from "@/components/shared/brandMark";
 
 type UserProfile = {
   id?: string;
@@ -61,15 +62,9 @@ export default function DashboardSidebar({
         <SidebarGroup>
           <Link
             href="/"
-            className="flex items-center gap-3 rounded-xl px-3 py-4 text-[1.15rem] font-semibold tracking-tight text-[#26342a]"
+            className="flex items-center rounded-xl px-3 py-4"
           >
-            <span className="flex size-9 items-center justify-center rounded-full bg-[#2f5039] text-[#f3f0e7]">
-              <Home className="size-4" />
-            </span>
-            rent<span className="-ml-3 font-normal text-[#9a5c40]">nest</span>
-            <span className="ml-auto text-[10px] font-medium uppercase tracking-[0.16em] text-[#82897f]">
-              Space
-            </span>
+            <BrandMark />
           </Link>
         </SidebarGroup>
 

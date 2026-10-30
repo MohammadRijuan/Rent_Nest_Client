@@ -1,11 +1,7 @@
 import Link from "next/link";
-import {
-  House,
-  MapPin,
-  Mail,
-  ArrowUpRight,
-} from "lucide-react";
+import { MapPin, Mail, ArrowUpRight } from "lucide-react";
 import type { NavbarProps } from "@/lib/types";
+import BrandMark from "./brandMark";
 
 const footerLinks = {
   explore: [
@@ -49,13 +45,8 @@ export default function Footer({
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-[#e7c2a8]">
-                <House size={20} strokeWidth={1.6} />
-              </span>
-              <span className="text-[1.4rem] font-semibold tracking-[-0.06em] text-white">
-                rent<span className="font-normal text-[#d3b39b]">nest</span>
-              </span>
+            <Link href="/" className="inline-flex items-center">
+              <BrandMark inverse />
             </Link>
 
             <p className="mt-5 max-w-sm text-sm leading-7 text-[#bdc6bc]">
