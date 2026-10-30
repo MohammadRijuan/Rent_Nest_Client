@@ -95,6 +95,7 @@ export default function Navbar({ user }: NavbarProps) {
             <Link
               key={link.href}
               href={link.href}
+              prefetch={link.href === "/properties" ? false : undefined}
               className="text-sm font-medium text-zinc-600 transition hover:text-green-800"
             >
               {link.label}
@@ -201,6 +202,7 @@ export default function Navbar({ user }: NavbarProps) {
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={link.href === "/properties" ? false : undefined}
                 onClick={() => setIsMenuOpen(false)}
                 className="rounded-lg px-3 py-3 text-sm font-medium text-zinc-700 hover:bg-green-50"
               >

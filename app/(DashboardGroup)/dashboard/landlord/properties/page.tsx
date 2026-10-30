@@ -6,6 +6,7 @@ import { toast } from "sonner";
 
 import LandlordPropertiesAction from "@/app/(DashboardGroup)/_actions/landlordPropertiesAction";
 import CreatePropertyAction from "@/app/(DashboardGroup)/_actions/createPropertyAction";
+import UpdatePropertyAction from "@/app/(DashboardGroup)/_actions/updatePropertyAction";
 import CategoriesAction from "@/app/(DashboardGroup)/_actions/categoriesAction";
 
 import {
@@ -19,12 +20,16 @@ import {
 type Property = {
   id: string;
   titles: string;
+  description: string;
   location: string;
   rent: string;
   status: string;
   bedrooms: number;
   bathrooms: number;
+  amenities: string;
+  category_id: string;
   category?: {
+    id?: string;
     name: string;
   };
 };
@@ -34,6 +39,18 @@ type Category = {
   name: string;
 };
 
+const initialForm = {
+  category_id: "",
+  titles: "",
+  description: "",
+  location: "",
+  rent: "",
+  bedrooms: "",
+  bathrooms: "",
+  amenities: "",
+  status: "AVAILABLE" as "AVAILABLE" | "RENTED",
+};
+
 const LandlordProperties = () => {
   const [properties, setProperties] = useState<Property[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -41,18 +58,9 @@ const LandlordProperties = () => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
-  const [form, setForm] = useState({
-    category_id: "",
-    titles: "",
-    description: "",
-    location: "",
-    rent: "",
-    bedrooms: "",
-    bathrooms: "",
-    amenities: "",
-    status: "AVAILABLE" as "AVAILABLE" | "RENTED",
-  });
+  const [form, setForm] = useState(initialForm);
 
   const loadProperties = useCallback(async () => {
     setLoading(true);
@@ -67,9 +75,10 @@ const LandlordProperties = () => {
 
       const response = result.data.data;
 
-      setProperties(response.data);
-      setTotal(response.meta.total);
-    } catch {
+      setProperties(response.data || []);
+      setTotal(response.meta.total || 0);
+    } catch (error) {
+      console.error(error);
       toast.error("Failed to load properties");
     } finally {
       setLoading(false);
@@ -85,7 +94,7 @@ const LandlordProperties = () => {
         return;
       }
 
-      setCategories(result.data.data);
+      setCategories(result.data.data || []);
     } catch {
       toast.error("Failed to load categories");
     }
@@ -96,7 +105,35 @@ const LandlordProperties = () => {
     loadCategories();
   }, [loadProperties]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAdd = () => {
+    setEditingId(null);
+    setForm(initialForm);
+    setOpen(true);
+  };
+
+  const handleEdit = (property: Property) => {
+    setEditingId(property.id);
+
+    setForm({
+      category_id:
+        property.category_id || property.category?.id || "",
+      titles: property.titles || "",
+      description: property.description || "",
+      location: property.location || "",
+      rent: String(property.rent || ""),
+      bedrooms: String(property.bedrooms ?? ""),
+      bathrooms: String(property.bathrooms ?? ""),
+      amenities: property.amenities || "",
+      status:
+        property.status === "RENTED" ? "RENTED" : "AVAILABLE",
+    });
+
+    setOpen(true);
+  };
+
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     if (!form.category_id) {
@@ -107,7 +144,7 @@ const LandlordProperties = () => {
     setSubmitting(true);
 
     try {
-      const result = await CreatePropertyAction({
+      const propertyData = {
         category_id: form.category_id,
         titles: form.titles,
         description: form.description,
@@ -117,32 +154,35 @@ const LandlordProperties = () => {
         bathrooms: Number(form.bathrooms),
         amenities: form.amenities,
         status: form.status,
-      });
+      };
+
+      const result = editingId
+        ? await UpdatePropertyAction(editingId, propertyData)
+        : await CreatePropertyAction(propertyData);
 
       if (!result.success) {
         toast.error(result.message);
         return;
       }
 
-      toast.success("Property created successfully!");
+      toast.success(
+        editingId
+          ? "Property updated successfully!"
+          : "Property created successfully!"
+      );
 
       setOpen(false);
+      setEditingId(null);
+      setForm(initialForm);
 
-      setForm({
-        category_id: "",
-        titles: "",
-        description: "",
-        location: "",
-        rent: "",
-        bedrooms: "",
-        bathrooms: "",
-        amenities: "",
-        status: "AVAILABLE",
-      });
-
-      loadProperties();
-    } catch {
-      toast.error("Failed to create property");
+      await loadProperties();
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        editingId
+          ? "Failed to update property"
+          : "Failed to create property"
+      );
     } finally {
       setSubmitting(false);
     }
@@ -150,27 +190,35 @@ const LandlordProperties = () => {
 
   return (
     <section className="w-full min-w-0 space-y-6">
+      {/* Header */}
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 className="text-2xl font-bold">My Properties</h1>
           <p className="text-sm text-muted-foreground">
-            Manage your rental properties.
+            Manage and update your rental properties.
           </p>
         </div>
 
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger >
-            <button className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
+          <DialogTrigger>
+            <button
+              type="button"
+              onClick={handleAdd}
+              className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
+            >
               + Add New Property
             </button>
           </DialogTrigger>
 
           <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle>Add New Property</DialogTitle>
+              <DialogTitle>
+                {editingId ? "Update Property" : "Add New Property"}
+              </DialogTitle>
             </DialogHeader>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Property Title */}
               <div>
                 <label className="mb-1 block text-sm font-medium">
                   Property Title
@@ -186,6 +234,7 @@ const LandlordProperties = () => {
                 />
               </div>
 
+              {/* Category */}
               <div>
                 <label className="mb-1 block text-sm font-medium">
                   Category
@@ -207,6 +256,7 @@ const LandlordProperties = () => {
                 </select>
               </div>
 
+              {/* Description */}
               <div>
                 <label className="mb-1 block text-sm font-medium">
                   Description
@@ -223,6 +273,7 @@ const LandlordProperties = () => {
                 />
               </div>
 
+              {/* Location */}
               <div>
                 <label className="mb-1 block text-sm font-medium">
                   Location
@@ -238,6 +289,7 @@ const LandlordProperties = () => {
                 />
               </div>
 
+              {/* Rent, Bedrooms, Bathrooms and Status */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-1 block text-sm font-medium">
@@ -296,7 +348,9 @@ const LandlordProperties = () => {
                     onChange={(e) =>
                       setForm({
                         ...form,
-                        status: e.target.value as "AVAILABLE" | "RENTED",
+                        status: e.target.value as
+                          | "AVAILABLE"
+                          | "RENTED",
                       })
                     }
                     className="w-full rounded-md border px-3 py-2"
@@ -307,6 +361,7 @@ const LandlordProperties = () => {
                 </div>
               </div>
 
+              {/* Amenities */}
               <div>
                 <label className="mb-1 block text-sm font-medium">
                   Amenities
@@ -323,28 +378,39 @@ const LandlordProperties = () => {
                 />
               </div>
 
+              {/* Submit */}
               <button
                 type="submit"
                 disabled={submitting}
                 className="w-full rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground disabled:opacity-50"
               >
-                {submitting ? "Creating..." : "Create Property"}
+                {submitting
+                  ? editingId
+                    ? "Updating..."
+                    : "Creating..."
+                  : editingId
+                    ? "Update Property"
+                    : "Create Property"}
               </button>
             </form>
           </DialogContent>
         </Dialog>
       </div>
 
+      {/* Total Properties */}
       <div className="rounded-xl border p-5">
-        <p className="text-sm text-muted-foreground">Total Properties</p>
+        <p className="text-sm text-muted-foreground">
+          Total Properties
+        </p>
         <p className="mt-2 text-3xl font-bold">
           {loading ? "—" : total}
         </p>
       </div>
 
+      {/* Properties Table */}
       <div className="overflow-hidden rounded-xl border">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[750px] text-sm">
+          <table className="w-full min-w-[850px] text-sm">
             <thead className="bg-muted/50">
               <tr className="text-left">
                 <th className="px-4 py-3">Property</th>
@@ -354,41 +420,73 @@ const LandlordProperties = () => {
                 <th className="px-4 py-3">Bedrooms</th>
                 <th className="px-4 py-3">Bathrooms</th>
                 <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>
 
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="px-4 py-10 text-center">
+                  <td colSpan={8} className="px-4 py-10 text-center">
                     Loading properties...
                   </td>
                 </tr>
               ) : properties.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-4 py-10 text-center">
+                  <td colSpan={8} className="px-4 py-10 text-center">
                     No properties found.
                   </td>
                 </tr>
               ) : (
                 properties.map((property) => (
-                  <tr key={property.id} className="border-t hover:bg-muted/30">
+                  <tr
+                    key={property.id}
+                    className="border-t hover:bg-muted/30"
+                  >
                     <td className="px-4 py-4 font-medium">
                       {property.titles?.trim()}
                     </td>
+
                     <td className="px-4 py-4">
                       {property.category?.name || "—"}
                     </td>
-                    <td className="px-4 py-4">{property.location}</td>
+
+                    <td className="px-4 py-4">
+                      {property.location}
+                    </td>
+
                     <td className="px-4 py-4">
                       ৳{Number(property.rent).toLocaleString("en-BD")}
                     </td>
-                    <td className="px-4 py-4">{property.bedrooms}</td>
-                    <td className="px-4 py-4">{property.bathrooms}</td>
+
                     <td className="px-4 py-4">
-                      <span className="rounded-full bg-muted px-3 py-1 text-xs">
+                      {property.bedrooms}
+                    </td>
+
+                    <td className="px-4 py-4">
+                      {property.bathrooms}
+                    </td>
+
+                    <td className="px-4 py-4">
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs ${
+                          property.status === "RENTED"
+                            ? "bg-red-100 text-red-700"
+                            : "bg-green-100 text-green-700"
+                        }`}
+                      >
                         {property.status}
                       </span>
+                    </td>
+
+                    <td className="px-4 py-4">
+                      <button
+                        type="button"
+                        onClick={() => handleEdit(property)}
+                        className="rounded-md border px-3 py-1.5 text-sm font-medium hover:bg-muted"
+                      >
+                        Edit
+                      </button>
                     </td>
                   </tr>
                 ))

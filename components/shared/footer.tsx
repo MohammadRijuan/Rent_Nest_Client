@@ -96,6 +96,7 @@ export default function Footer({
                         ? dashboardHref
                         : link.href
                     }
+                    prefetch={link.href.startsWith("/properties") ? false : undefined}
                     className="text-sm text-zinc-400 transition hover:text-green-400"
                   >
                     {link.label}
@@ -167,6 +168,7 @@ export default function Footer({
 
           <Link
             href="/properties"
+            prefetch={false}
             className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-green-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-600"
           >
             Explore Properties

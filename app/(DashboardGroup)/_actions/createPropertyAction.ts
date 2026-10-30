@@ -2,6 +2,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidatePath, updateTag } from "next/cache";
 
 type PropertyPayload = {
   category_id: string;
@@ -43,6 +44,9 @@ const CreatePropertyAction = async (payload: PropertyPayload) => {
         message: data.message || "Failed to create property",
       };
     }
+
+    updateTag("properties");
+    revalidatePath("/properties");
 
     return { success: true as const, data };
   } catch {
