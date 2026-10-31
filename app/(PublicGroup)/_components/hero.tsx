@@ -57,7 +57,7 @@ export function Hero() {
           <div className="absolute -left-7 top-12 z-10 hidden h-24 w-24 rounded-full border border-[#9d684e]/40 sm:block" />
           <div className="relative aspect-[0.94] overflow-hidden rounded-t-[48%] rounded-b-2xl bg-[#d7dfd9] shadow-[0_28px_70px_-38px_rgba(37,53,41,0.42)]">
             <Image
-              src="/images/rent-1.jpg"
+              src="/images/rent.jpg"
               alt="A house-shaped wooden model beside a magnifying glass and the word rent"
               fill
               loading="eager"
