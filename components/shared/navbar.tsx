@@ -19,7 +19,6 @@ import BrandMark from "./brandMark";
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Explore Properties", href: "/properties" },
-  { label: "Favorites", href: "/favorites" },
   { label: "Contact", href: "/contact" },
 ];
 
