@@ -113,19 +113,6 @@ export const LoginForm = () => {
                     </div>
                 </div>
 
-                {/* Remember Me */}
-                <div className="flex  items-center gap-2">
-                    <input
-                        id="remember"
-                        name="remember"
-                        type="checkbox"
-                        className="size-4 cursor-pointer rounded border-zinc-300 accent-green-800 focus:ring-green-800"
-                    />
-
-                    <label htmlFor="remember" className="text-sm cursor-pointer text-zinc-600">
-                        Remember me
-                    </label>
-                </div>
 
                 {/* Submit */}
                 <button
