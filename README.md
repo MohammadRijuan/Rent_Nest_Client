@@ -4,6 +4,10 @@ RentNest is a modern rental property marketplace designed to connect tenants wit
 
 The platform provides dedicated dashboards for tenants, landlords, and administrators, making the rental process more organized, transparent, and convenient.
 
+## 🌐 Live Demo
+
+**Live Website:** https://rent-nest-client-flax.vercel.app/
+
 ---
 
 ## 🚀 Features
@@ -81,53 +85,9 @@ The platform provides dedicated dashboards for tenants, landlords, and administr
 
 ---
 
-## 📁 Project Structure
-
-```text
-rent_nest_client/
-│
-├── app/
-│   ├── (MainGroup)/
-│   │   ├── _components/
-│   │   ├── _actions/
-│   │   └── page.tsx
-│   │
-│   ├── (DashboardGroup)/
-│   │   ├── dashboard/
-│   │   └── _actions/
-│   │
-│   ├── api/
-│   │   └── revalidate/
-│   │
-│   ├── login/
-│   ├── register/
-│   ├── properties/
-│   ├── payment/
-│   ├── layout.tsx
-│   └── globals.css
-│
-├── components/
-│   └── ui/
-│
-├── lib/
-│
-├── public/
-│   └── images/
-│
-├── .env.local
-├── next.config.ts
-├── package.json
-└── README.md
-```
-
----
-
 ## ⚙️ Installation & Setup
 
 ### Prerequisites
-
-Make sure you have installed:
-
 - Node.js (LTS recommended)
 - npm
 - Git
@@ -158,8 +118,6 @@ Create a `.env.local` file in the project root:
 BACKEND_API_URL=YOUR_BACKEND_API_URL
 ```
 
-Replace the placeholder with your deployed backend URL or local backend URL.
-
 Example:
 
 ```env
@@ -174,27 +132,7 @@ Do not add `/api` to this URL because API actions already append the `/api` pref
 npm run dev
 ```
 
-Open:
-
-```text
-http://localhost:3000
-```
-
----
-
-## 🌐 Backend Configuration
-
-RentNest uses a separate Express.js backend.
-
-Configure the backend environment variables according to your backend setup, including:
-
-- PostgreSQL database connection.
-- JWT access and refresh token secrets.
-- Frontend and backend URLs.
-- SSLCommerz credentials.
-- Payment gateway configuration.
-
-Refer to the backend repository's README for its complete setup instructions.
+Open http://localhost:3000 in your browser.
 
 ---
 
@@ -225,14 +163,9 @@ Never commit `.env.local`, API credentials, database passwords, or authenticatio
 
 ## 🚀 Deployment
 
-The frontend can be deployed using Vercel.
+The frontend is deployed on Vercel.
 
-1. Push the project to GitHub.
-2. Import the repository into Vercel.
-3. Configure the `BACKEND_API_URL` environment variable.
-4. Deploy the project.
-5. Configure the backend's `FRONTEND_URL` with the deployed frontend domain.
-6. Configure the cache revalidation secret on both frontend and backend if using the revalidation endpoint.
+**Live URL:** https://rent-nest-client-flax.vercel.app/
 
 ---
 
@@ -244,10 +177,9 @@ The goal of RentNest is to provide a centralized rental property management plat
 
 ## 👨‍💻 Developer
 
-**Developed as a Full-Stack Web Development Project**
-
 **Project:** RentNest  
-**Category:** Rental Property Marketplace & Management System
+**Category:** Rental Property Marketplace & Management System  
+**Development:** Full-Stack Web Development
 
 ---
 
