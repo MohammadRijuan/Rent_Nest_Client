@@ -244,6 +244,7 @@ const RequestsPage = () => {
                       </Button>
 
                       <Button
+                      className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#2f5039] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#243f2d]"
                         disabled={updatingId === request.id}
                         onClick={() =>
                           handleStatusUpdate(request.id, "APPROVED")
