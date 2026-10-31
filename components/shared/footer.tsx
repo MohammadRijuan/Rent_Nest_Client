@@ -6,15 +6,10 @@ import BrandMark from "./brandMark";
 const footerLinks = {
   explore: [
     { label: "All Properties", href: "/properties" },
-    { label: "Apartments", href: "/properties?type=apartment" },
-    { label: "Houses", href: "/properties?type=house" },
-    { label: "Rooms", href: "/properties?type=room" },
-    { label: "Favorites", href: "/favorites" },
   ],
   company: [
     { label: "Home", href: "/" },
     { label: "Contact Us", href: "/contact" },
-    { label: "List Your Property", href: "/dashboard/properties/new" },
     { label: "My Dashboard", href: "/dashboard" },
   ],
   legal: [
