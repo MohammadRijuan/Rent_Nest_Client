@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -36,7 +37,8 @@ const AllRequests = () => {
         } else {
           toast.error(result.message);
         }
-      } catch {
+      } catch (error) {
+        console.error("Rental requests error:", error);
         toast.error("Failed to load rental requests");
       } finally {
         setLoading(false);
@@ -45,6 +47,15 @@ const AllRequests = () => {
 
     getRequests();
   }, []);
+
+  // Display rejected requests as cancelled.
+  const getDisplayStatus = (status: string) => {
+    if (status === "REJECTED") {
+      return "CANCELLED";
+    }
+
+    return status;
+  };
 
   const getStatusStyle = (status: string) => {
     switch (status) {
@@ -55,6 +66,7 @@ const AllRequests = () => {
         return "bg-blue-100 text-blue-700";
 
       case "CANCELLED":
+      case "REJECTED":
         return "bg-red-100 text-red-700";
 
       default:
@@ -62,8 +74,28 @@ const AllRequests = () => {
     }
   };
 
+  const getStatusMessage = (status: string, isPaid: boolean) => {
+    switch (status) {
+      case "PENDING":
+        return "Your request is waiting for landlord approval.";
+
+      case "APPROVED":
+        return isPaid
+          ? "Your payment has been completed successfully."
+          : "Your request has been approved. You can now proceed with payment.";
+
+      case "REJECTED":
+      case "CANCELLED":
+        return "Your rental request has been cancelled.";
+
+      default:
+        return "Check your rental request status.";
+    }
+  };
+
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold">My Rental Requests</h1>
         <p className="text-sm text-muted-foreground">
@@ -71,9 +103,11 @@ const AllRequests = () => {
         </p>
       </div>
 
+      {/* Requests Container */}
       <div className="rounded-lg border">
         <div className="border-b p-5">
           <h2 className="font-semibold">All Requests</h2>
+
           <p className="text-sm text-muted-foreground">
             {requests.length} rental requests found
           </p>
@@ -85,7 +119,9 @@ const AllRequests = () => {
           </p>
         ) : requests.length === 0 ? (
           <div className="p-10 text-center">
-            <h3 className="font-semibold">No rental requests found</h3>
+            <h3 className="font-semibold">
+              No rental requests found
+            </h3>
 
             <p className="mt-1 text-sm text-muted-foreground">
               You haven't requested any properties yet.
@@ -105,49 +141,65 @@ const AllRequests = () => {
                 (payment) => payment.status === "SUCCESS"
               );
 
+              const displayStatus = getDisplayStatus(
+                request.status
+              );
+
               return (
-                <div key={request.id} className="space-y-4 p-5">
+                <div
+                  key={request.id}
+                  className="space-y-4 p-5"
+                >
+                  {/* Property and Status */}
                   <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
                     <div>
                       <h3 className="font-semibold">
-                        {request.property.titles}
+                        {request.property?.titles || "Property"}
                       </h3>
 
                       <p className="mt-1 text-sm text-muted-foreground">
                         Requested on:{" "}
-                        {new Date(request.createdAt).toLocaleDateString(
-                          "en-GB"
-                        )}
+                        {new Date(
+                          request.createdAt
+                        ).toLocaleDateString("en-GB")}
                       </p>
                     </div>
 
                     <span
                       className={`w-fit rounded-full px-3 py-1 text-xs font-medium ${getStatusStyle(
-                        request.status
+                        displayStatus
                       )}`}
                     >
-                      {request.status}
+                      {displayStatus}
                     </span>
                   </div>
 
+                  {/* Request Details */}
                   <div className="grid gap-3 text-sm sm:grid-cols-2">
                     <div>
-                      <p className="text-muted-foreground">Move-in Date</p>
+                      <p className="text-muted-foreground">
+                        Move-in Date
+                      </p>
+
                       <p className="font-medium">
-                        {new Date(request.move_in_date).toLocaleDateString(
-                          "en-GB"
-                        )}
+                        {new Date(
+                          request.move_in_date
+                        ).toLocaleDateString("en-GB")}
                       </p>
                     </div>
 
                     <div>
-                      <p className="text-muted-foreground">Payments</p>
+                      <p className="text-muted-foreground">
+                        Payments
+                      </p>
+
                       <p className="font-medium">
                         {request.payments?.length || 0}
                       </p>
                     </div>
                   </div>
 
+                  {/* Tenant Message */}
                   <div>
                     <p className="text-sm text-muted-foreground">
                       Your Message
@@ -158,6 +210,23 @@ const AllRequests = () => {
                     </p>
                   </div>
 
+                  {/* Status Information */}
+                  <div
+                    className={`rounded-md p-3 text-sm ${
+                      request.status === "PENDING"
+                        ? "bg-yellow-50 text-yellow-800"
+                        : request.status === "APPROVED"
+                          ? "bg-blue-50 text-blue-800"
+                          : "bg-red-50 text-red-800"
+                    }`}
+                  >
+                    {getStatusMessage(
+                      request.status,
+                      isPaid
+                    )}
+                  </div>
+
+                  {/* Payment Action */}
                   {request.status === "APPROVED" &&
                     (isPaid ? (
                       <span className="inline-block rounded-md bg-green-100 px-4 py-2 text-sm font-medium text-green-700">
@@ -166,7 +235,7 @@ const AllRequests = () => {
                     ) : (
                       <Link
                         href={`/dashboard/tenant/requests/${request.id}/pay`}
-                        className="inline-block rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:opacity-90"
+                        className="inline-block rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
                       >
                         Pay Now →
                       </Link>
